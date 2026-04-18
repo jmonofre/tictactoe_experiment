@@ -11,6 +11,11 @@ const DISPLAY_SYMBOLS = {
   O: '🐶',
 };
 
+const INITIAL_SCORE = {
+  X: 0,
+  O: 0,
+};
+
 /**
  * Returns the initial game state.
  */
@@ -38,6 +43,26 @@ function getNextPlayer(current) {
  */
 function getDisplaySymbol(mark) {
   return DISPLAY_SYMBOLS[mark] || mark;
+}
+
+/**
+ * Returns the initial scoreboard state.
+ */
+function createInitialScore() {
+  return { ...INITIAL_SCORE };
+}
+
+/**
+ * Returns a new scoreboard with one extra win for the provided winner.
+ * @param {{ X: number, O: number }} score
+ * @param {'X'|'O'} winner
+ * @returns {{ X: number, O: number }}
+ */
+function applyWinToScore(score, winner) {
+  return {
+    ...score,
+    [winner]: score[winner] + 1,
+  };
 }
 
 /**
@@ -79,9 +104,12 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     WINNING_COMBOS,
     DISPLAY_SYMBOLS,
+    INITIAL_SCORE,
     createInitialState,
     getNextPlayer,
     getDisplaySymbol,
+    createInitialScore,
+    applyWinToScore,
     applyMove,
     checkWinner,
   };
